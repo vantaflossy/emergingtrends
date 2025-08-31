@@ -238,10 +238,23 @@
 
       const buttons = document.querySelectorAll("#options button");
       buttons.forEach((btn, i) => {
-        if (Array.isArray(q.answer) ? q.answer.includes(i) : i === q.answer || (q.type==="tf" && q.answer === (i===0))) {
-          btn.classList.add("correct");
-        } else if (i === selected) {
-          btn.classList.add("wrong");
+        if (q.type === "tf") {
+          // Highlight the selected button as correct or wrong
+          if (i === (selected ? 0 : 1)) {
+            if ((selected === true && q.answer === true) || (selected === false && q.answer === false)) {
+              btn.classList.add("correct");
+            } else {
+              btn.classList.add("wrong");
+            }
+          }
+          // Always show the correct answer as green
+          if ((i === 0 && q.answer === true) || (i === 1 && q.answer === false)) {
+            btn.classList.add("correct");
+          }
+        } else {
+          if (i === selected) {
+            btn.classList.add(isCorrect ? "correct" : "wrong");
+          }
         }
         btn.disabled = true;
       });
